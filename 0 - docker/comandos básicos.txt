@@ -1,0 +1,36 @@
+- informações do docker
+docker info
+docker version
+
+- baixar uma imagem
+docker pull <imagem>
+
+- ver imagens baixadas
+docker images
+
+- remover uma imagem
+docker rmi mysql
+
+- listar containers
+docker container list
+docker container list --all
+docker ps -> para listar os containers ativo
+docker ps -a -> vai listar todos containers parado
+
+- renomear container
+docker rename <nome> <novo_nome>
+
+- remover um container
+docker rm base_mysql
+
+- executar uma imagem
+docker run -d -p 80:80 docker/getting-started
+docker run -dp 80:80 docker/getting-started
+docker run --name base_mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
+
+- criar uma imagem
+docker build -t getting-started .
+
+-docker compose
+docker-compose up -d
+docker-compose down
