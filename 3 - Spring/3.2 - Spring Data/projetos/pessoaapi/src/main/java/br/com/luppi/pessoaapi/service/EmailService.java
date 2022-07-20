@@ -112,7 +112,7 @@ public class EmailService {
 
     public String geContentFromCreateEnderecoTemplate(PessoaEntity pessoaEntity, Endereco endereco) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
-        dados.put("nome", pessoaEntity.getNome());
+        dados.put("nome", pessoaEntity.getBatata());
         dados.put("tipo", endereco.getTipo());
         dados.put("logradouro", endereco.getLogradouro());
         dados.put("numero", endereco.getNumero());
@@ -125,7 +125,7 @@ public class EmailService {
 
     public String geContentFromUpdateEnderecoTemplate(PessoaEntity pessoaEntity, Endereco endereco) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
-        dados.put("nome", pessoaEntity.getNome());
+        dados.put("nome", pessoaEntity.getBatata());
         dados.put("tipo", endereco.getTipo());
         dados.put("logradouro", endereco.getLogradouro());
         dados.put("numero", endereco.getNumero());
@@ -138,7 +138,7 @@ public class EmailService {
 
     public String geContentFromDeleteEnderecoTemplate(PessoaEntity pessoaEntity, Endereco endereco) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
-        dados.put("nome", pessoaEntity.getNome());
+        dados.put("nome", pessoaEntity.getBatata());
         dados.put("tipo", endereco.getTipo());
         dados.put("logradouro", endereco.getLogradouro());
         dados.put("numero", endereco.getNumero());

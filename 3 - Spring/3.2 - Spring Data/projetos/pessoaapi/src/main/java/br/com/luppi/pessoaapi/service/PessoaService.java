@@ -9,6 +9,8 @@ import br.com.luppi.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +28,12 @@ public class PessoaService {
     private final String NOT_FOUND_MESSAGE = "ID da pessoa nao encontrada";
 
 
-    public PessoaDTO create(PessoaCreateDTO pessoaDto) throws RegraDeNegocioException {
+    public PessoaDTO create(PessoaCreateDTO pessoaDto) {
         PessoaEntity pessoaEntity = converterDTO(pessoaDto);
         return retornarDTO(pessoaRepository.save(pessoaEntity));
     }
-    public List<PessoaDTO> list(){
+
+    public List<PessoaDTO> list() {
         return pessoaRepository.findAll().stream()
                 .map(this::retornarDTO)
                 .collect(Collectors.toList());
@@ -42,25 +45,29 @@ public class PessoaService {
         pessoaEntityRecuperada.setCpf(pessoaDto.getCpf());
         pessoaEntityRecuperada.setEmail(pessoaDto.getEmail());
         pessoaEntityRecuperada.setDataNascimento(pessoaDto.getDataNascimento());
-        pessoaEntityRecuperada.setNome(pessoaDto.getNome());
+        pessoaEntityRecuperada.setBatata(pessoaDto.getNome());
 
         return retornarDTO(pessoaRepository.save(pessoaEntityRecuperada));
     }
 
-    public void delete(Integer id) throws EntidadeNaoEncontradaException {
-        PessoaEntity pessoaEntityRecuperada = returnPersonById(id);
-        pessoaRepository.delete(pessoaEntityRecuperada);
+    public void delete(Integer id) {
+        try {
+            PessoaEntity pessoaEntityRecuperada = returnPersonById(id);
+            pessoaRepository.delete(pessoaEntityRecuperada);
+        } catch (EntidadeNaoEncontradaException ex){
+            ex.printStackTrace();
+        }
 //        pessoaRepositoryTIRARJPA.deleteById(id);
     }
 
     public List<PessoaDTO> listByName(String nome) {
         return pessoaRepository.findAll().stream()
-                .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
+                .filter(pessoa -> pessoa.getBatata().toUpperCase().contains(nome.toUpperCase()))
                 .map(this::retornarDTO)
                 .collect(Collectors.toList());
     }
 
-    public void verificarId(Integer idPessoa) throws  EntidadeNaoEncontradaException {
+    public void verificarId(Integer idPessoa) throws EntidadeNaoEncontradaException {
         pessoaRepository.findAll().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
                 .findFirst()

@@ -30,7 +30,7 @@ public class PessoaRepositoryOld {
 
     public PessoaEntity update(PessoaEntity pessoaEntityRecuperada, PessoaEntity pessoaEntityAtualizada) {
         pessoaEntityRecuperada.setCpf(pessoaEntityAtualizada.getCpf());
-        pessoaEntityRecuperada.setNome(pessoaEntityAtualizada.getNome());
+        pessoaEntityRecuperada.setBatata(pessoaEntityAtualizada.getBatata());
         pessoaEntityRecuperada.setDataNascimento(pessoaEntityAtualizada.getDataNascimento());
         pessoaEntityRecuperada.setEmail(pessoaEntityAtualizada.getEmail());
         return pessoaEntityRecuperada;

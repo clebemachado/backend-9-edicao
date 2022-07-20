@@ -63,7 +63,7 @@ public class PessoaComDadosRepository {
 
     public PessoaEntity extrairPessoa(PessoaComDados pessoaComDados) {
         PessoaEntity pessoaEntity = new PessoaEntity();
-        pessoaEntity.setNome(pessoaComDados.getNome());
+        pessoaEntity.setBatata(pessoaComDados.getNome());
         pessoaEntity.setCpf(pessoaComDados.getCpf());
         pessoaEntity.setDataNascimento(pessoaComDados.getDataNascimento());
         pessoaEntity.setEmail(pessoaComDados.getEmail());
