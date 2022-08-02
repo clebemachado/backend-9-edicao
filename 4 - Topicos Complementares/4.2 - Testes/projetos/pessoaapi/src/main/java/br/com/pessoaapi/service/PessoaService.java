@@ -44,7 +44,7 @@ public class PessoaService {
         return pessoaRepository.findAll(pageable);
     }
 
-    public PessoaDTO update(Integer id, PessoaCreateDTO pessoaDto) throws RegraDeNegocioException, EntidadeNaoEncontradaException {
+    public PessoaDTO update(Integer id, PessoaCreateDTO pessoaDto) throws EntidadeNaoEncontradaException {
         PessoaEntity pessoaEntityRecuperada = returnPersonById(id);
 
         pessoaEntityRecuperada.setCpf(pessoaDto.getCpf());
@@ -90,11 +90,11 @@ public class PessoaService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(NOT_FOUND_MESSAGE));
     }
 
-    public PessoaEntity converterDTO(PessoaCreateDTO dto) {
+    private PessoaEntity converterDTO(PessoaCreateDTO dto) {
         return objectMapper.convertValue(dto, PessoaEntity.class);
     }
 
-    public PessoaDTO retornarDTO(PessoaEntity pessoaEntity) {
+    private PessoaDTO retornarDTO(PessoaEntity pessoaEntity) {
         return objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
     }
 }
