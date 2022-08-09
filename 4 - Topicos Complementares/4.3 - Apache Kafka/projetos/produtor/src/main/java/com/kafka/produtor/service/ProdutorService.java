@@ -1,5 +1,8 @@
 package com.kafka.produtor.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kafka.produtor.dto.BancoDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -20,10 +24,24 @@ import java.util.UUID;
 public class ProdutorService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
+    private final ObjectMapper objectMapper;
+
     @Value("${kafka.topic}")
     private String topico;
 
-    public void enviarMensagemKafka(String mensagem) {
+    @Value("${kafka.topic-banco}")
+    private String topicoBanco;
+
+    public void enviarMensagemObjeto(BancoDTO bancoDTO) throws JsonProcessingException {
+        String bancoObjetoString = objectMapper.writeValueAsString(bancoDTO);
+        enviarMensagem(bancoObjetoString, topicoBanco);
+    }
+
+    public void enviarMensagemString(String mensagem){
+        enviarMensagem(mensagem, topico);
+    }
+
+    private void enviarMensagem(String mensagem, String topico) {
         MessageBuilder<String> stringMessageBuilder = MessageBuilder.withPayload(mensagem)
                 .setHeader(KafkaHeaders.TOPIC, topico)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, UUID.randomUUID().toString());
